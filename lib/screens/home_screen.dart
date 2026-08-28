@@ -35,9 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
 
-        child: BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            return Column(
+        child: Column(
               children: [
 
                 TextField(
@@ -95,6 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 310,
                   child: BlocBuilder<HomeCubit, HomeState>(
                     builder: (context, state) {
+                      if (state is HomeCarouselMovieLoading){
+                        return CircularProgressIndicator();
+                      }
+
                       return CarouselSlider(
                         items: [
                           Image.asset(
@@ -129,12 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-
               ],
-            );
-          },
-        ),
-      ),
+            )
+      )
     );
   }
 }
