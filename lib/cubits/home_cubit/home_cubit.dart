@@ -6,7 +6,10 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
-  void greet(){
-    emit (HomeDisplayGreet());
+  // void greet(){
+  //   emit (HomeDisplayGreet());
+
+  void getCarleslider(){
+
   }
 }

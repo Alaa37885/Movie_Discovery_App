@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_nti_aug/cubits/home_cubit/home_cubit.dart';
+import "package:carousel_slider/carousel_slider.dart";
 // import 'package:movie_nti_aug/cubits/home_cubit/home_state.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-var isShow = true;
+  var isShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,6 @@ var isShow = true;
 
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-
             return Column(
               children: [
 
@@ -54,41 +54,82 @@ var isShow = true;
                 ),
 
                 const SizedBox(height: 20),
+                //
+                // ElevatedButton(
+                //   onPressed: () {
+                //     context.read<HomeCubit>().greet();
+                //       isShow = !isShow;
+                //
+                //   },
+                //   child: const Text("Get Started"),
+                // ),
+                //
+                // if (isShow)
+                //   const Text(
+                //     "🤙",
+                //     style: TextStyle(fontSize: 45),
+                //   ),
+                //
+                // const SizedBox(height: 20),
+                //
+                // Row(
+                //   children: [
+                //     Image.asset(
+                //       "assets/images/movie-1.png",
+                //       width: 150,
+                //       height: 210,
+                //     ),
+                //
+                //     const SizedBox(width: 70),
+                //
+                //     Image.asset(
+                //       "assets/images/movie-2.png",
+                //       width: 150,
+                //       height: 210,
+                //     ),
+                //   ],
+                //
+                // ),
 
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<HomeCubit>().greet();
-                      isShow = !isShow;
+                SizedBox(
+                  height: 310,
+                  child: BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, state) {
+                      return CarouselSlider(
+                        items: [
+                          Image.asset(
+                            "assets/images/movie-1.png",
+                            width: 150,
+                            height: 210,
+                            fit: BoxFit.cover,
+                          ),
 
-                  },
-                  child: const Text("Get Started"),
-                ),
+                          Image.asset(
+                            "assets/images/movie-2.png",
+                            width: 150,
+                            height: 210,
+                            fit: BoxFit.cover,
+                          ),
 
-                if (isShow)
-                  const Text(
-                    "🤙",
-                    style: TextStyle(fontSize: 45),
+                          Image.asset(
+                            "assets/images/movie-1.png",
+                            width: 150,
+                            height: 210,
+                            fit: BoxFit.cover,
+                          ),
+                        ],
+
+                        options: CarouselOptions(
+                          height: 300,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.5,
+                        ),
+                      );
+                    },
                   ),
-
-                const SizedBox(height: 20),
-
-                Row(
-                  children: [
-                    Image.asset(
-                      "assets/images/movie-1.png",
-                      width: 150,
-                      height: 210,
-                    ),
-
-                    const SizedBox(width: 70),
-
-                    Image.asset(
-                      "assets/images/movie-2.png",
-                      width: 150,
-                      height: 210,
-                    ),
-                  ],
                 ),
+
               ],
             );
           },
