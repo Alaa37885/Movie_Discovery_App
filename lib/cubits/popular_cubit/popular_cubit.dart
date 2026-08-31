@@ -27,7 +27,7 @@ class PopularCubit extends Cubit<PopularState> {
     var popularResponse = PopularResponse.fromJson(res.data);
     emit(PopularSuccess(popularResponse));
 
-  } catch(e){
+    } catch(e){
       emit(PopularFailure(e.toString()));
     }
   }

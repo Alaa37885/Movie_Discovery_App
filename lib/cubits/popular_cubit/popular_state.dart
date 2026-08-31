@@ -1,4 +1,5 @@
 part of 'popular_cubit.dart';
+// import 'package:movie_nti_aug/models/movies_model.dart';
 
 @immutable
 sealed class PopularState {}
