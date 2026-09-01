@@ -21,21 +21,21 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
         "accept": "application/json",
       };
 
-      // 1. Fetch Movie Details
+      // Movie Details
       final detailsRes = await dio.get(
         "https://api.themoviedb.org/3/movie/$movieId",
         queryParameters: {"language": "en-US"},
         options: Options(headers: headers),
       );
 
-      // 2. Fetch Cast (Credits)
+      // Cast
       final creditsRes = await dio.get(
         "https://api.themoviedb.org/3/movie/$movieId/credits",
         queryParameters: {"language": "en-US"},
         options: Options(headers: headers),
       );
 
-      // 3. Fetch Reviews
+      // Reviews
       final reviewsRes = await dio.get(
         "https://api.themoviedb.org/3/movie/$movieId/reviews",
         queryParameters: {"language": "en-US"},
