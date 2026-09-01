@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_nti_aug/models/popular_model.dart';
+
+import '../../models/movies_model.dart';
 part 'popular_state.dart';
 
 class PopularCubit extends Cubit<PopularState> {
@@ -24,8 +26,8 @@ class PopularCubit extends Cubit<PopularState> {
     print ("=============popular date===========");
     print(res.data);
 
-    var popularResponse = PopularResponse.fromJson(res.data);
-    emit(PopularSuccess(popularResponse));
+    var movies = PopularResponse.fromJson(res.data);
+    emit(PopularSuccess(movies: movies.results));
 
     } catch(e){
       emit(PopularFailure(e.toString()));
