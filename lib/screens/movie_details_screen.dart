@@ -210,7 +210,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                       const SizedBox(height: 24),
 
-                      // Movie Information Details Bar
+                      // Movie Information Details Bar(year , time , category)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Row(
@@ -220,22 +220,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               icon: Icons.calendar_today_outlined,
                               text: year,
                             ),
+
                             const SizedBox(width: 12),
                             const Text(
                               "|",
                               style: TextStyle(color: Color(0xff696C75)),
                             ),
                             const SizedBox(width: 12),
+
                             _InfoItem(
                               icon: Icons.access_time,
                               text: "${movie.runtime} Minutes",
                             ),
+
                             const SizedBox(width: 12),
                             const Text(
                               "|",
                               style: TextStyle(color: Color(0xff696C75)),
                             ),
                             const SizedBox(width: 12),
+
                             _InfoItem(
                               icon: Icons.confirmation_number_outlined,
                               text: genres,
@@ -246,7 +250,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                       const SizedBox(height: 24),
 
-                      // Tabs Selector Bar
+                      // Tabs Selector Bar(about_movie , reviews , cast)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Row(
@@ -302,7 +306,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         overview.isEmpty ? "No description available." : overview,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 12,
+          fontSize: 16,
           height: 1.6,
         ),
       ),
@@ -337,18 +341,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 CircleAvatar(
                   radius: 22,
                   backgroundColor: const Color(0xff6C5ECF),
-                  backgroundImage: review.avatarPath != null
-                      ? NetworkImage(
+                  backgroundImage:
+                  review.avatarPath != null ? NetworkImage(
                     review.avatarPath!.startsWith('/http')
                         ? review.avatarPath!.substring(1)
                         : "https://image.tmdb.org/t/p/w185${review.avatarPath}",
-                  )
-                      : null,
+                  )  : null,
+
                   child: review.avatarPath == null
                       ? const Icon(Icons.person, color: Colors.white)
                       : null,
-                ),
+                  ),
+
                 const SizedBox(height: 8),
+
                 Text(
                   review.rating != null
                       ? review.rating!.toStringAsFixed(1)
@@ -381,7 +387,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Color(0xff92929D),
-                      fontSize: 12,
+                      fontSize: 15,
                       height: 1.5,
                     ),
                   ),
@@ -500,7 +506,6 @@ class _DetailTab extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
         child: Column(
           children: [
             Text(

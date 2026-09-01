@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_nti_aug/cubits/search_cubit/search_cubit.dart';
 import 'package:movie_nti_aug/screens/home_screen.dart';
+import 'package:movie_nti_aug/screens/search_screen.dart';
+import 'package:movie_nti_aug/screens/watch_list_screen.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
@@ -10,44 +14,39 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   int index = 0;
-  List<Widget>screens=[
-    HomeScreen(),
-    Container(
-        child: Center(child: Text("Search" , style: TextStyle(color: Colors.white,),),
-  ))  ,
-    Container(
-        child: Center(child: Text("BookMark" , style: TextStyle(color: Colors.white,),),
-  ))
 
+  final List<Widget> screens = [
+    const HomeScreen(),
+    const SearchScreen(),
+    const WatchListScreen()
   ];
-
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xff242A32),),
-      backgroundColor: Color(0xff242A32) ,
-      body: screens[index],
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home) , label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.search) , label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark) , label: ""),
-        ],
+    return BlocProvider(
+      create: (context) => SearchCubit(),
+      child: Scaffold(
+        appBar: AppBar(backgroundColor: const Color(0xff242A32)),
+        backgroundColor: const Color(0xff242A32),
+        body: screens[index],
+        bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: TextStyle(fontSize: 18),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home Screen", ),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+            BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Watch List"),
+          ],
 
-        onTap: (value){
-          print(value);
-          index = value;
-          setState(() {
-
-          });
-        },
-
-        currentIndex: index,
-        backgroundColor: Color(0xff242A32),
-        selectedItemColor:  Color(0xff0296E5) ,
-        unselectedItemColor: Color(0xff67686D),
-
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+          currentIndex: index,
+          backgroundColor: const Color(0xff242A32),
+          selectedItemColor: const Color(0xff0296E5),
+          unselectedItemColor: const Color(0xff67686D),
+        ),
       ),
     );
   }
