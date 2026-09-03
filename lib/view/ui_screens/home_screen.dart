@@ -6,8 +6,9 @@ import 'package:movie_nti_aug/cubits/now_playing_cubit/now_playing_cubit.dart';
 import 'package:movie_nti_aug/cubits/popular_cubit/popular_cubit.dart';
 import 'package:movie_nti_aug/cubits/top_rated_cubit/top_rated_cubit.dart';
 import 'package:movie_nti_aug/cubits/upcoming_cubit/upcoming_cubit.dart';
-import 'package:movie_nti_aug/screens/movie_details_screen.dart';
 import 'package:movie_nti_aug/models/movies_model.dart';
+
+import 'movie_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_nti_aug/cubits/search_cubit/search_cubit.dart';
-import 'package:movie_nti_aug/screens/home_screen.dart';
-import 'package:movie_nti_aug/screens/search_screen.dart';
-import 'package:movie_nti_aug/screens/watch_list_screen.dart';
+import 'package:movie_nti_aug/view/ui_screens/search_screen.dart';
+import 'package:movie_nti_aug/view/ui_screens/watch_list_screen.dart';
+import 'home_screen.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});

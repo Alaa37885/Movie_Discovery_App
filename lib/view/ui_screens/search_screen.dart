@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_nti_aug/cubits/search_cubit/search_cubit.dart';
-import 'package:movie_nti_aug/screens/movie_details_screen.dart';
+import 'movie_details_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -40,9 +40,7 @@ class SearchScreen extends StatelessWidget {
                 // success
                 if (state is SearchSuccess) {
                   if (state.movies.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        "No movies found",
+                    return const Center(child: Text("No movies found",
                         style: TextStyle(color: Colors.white),
                       ),
                     );
@@ -90,7 +88,7 @@ class SearchScreen extends StatelessWidget {
                   );
                 }
 
-                // failuer
+                // failure
                 if (state is SearchFailure) {
                   return Center(
                     child: Column(
