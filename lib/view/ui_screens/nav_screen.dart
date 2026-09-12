@@ -18,23 +18,24 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const WatchListScreen()
+    const MovieListScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SearchCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SearchCubit()),
+      ],
       child: Scaffold(
-        appBar: AppBar(backgroundColor: const Color(0xff242A32)),
         backgroundColor: const Color(0xff242A32),
         body: screens[index],
         bottomNavigationBar: BottomNavigationBar(
           selectedLabelStyle: TextStyle(fontSize: 18),
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home Screen", ),
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-            BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Watch List"),
+            BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: "Watch list"),
           ],
 
           onTap: (value) {
@@ -51,3 +52,4 @@ class _NavScreenState extends State<NavScreen> {
     );
   }
 }
+

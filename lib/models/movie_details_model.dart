@@ -1,3 +1,5 @@
+import 'movies_model.dart';
+
 class MovieDetailsModel {
   final int id;
   final String title;
@@ -34,6 +36,26 @@ class MovieDetailsModel {
       genres: (json['genres'] as List<dynamic>? ?? [])
           .map((genre) => GenreModel.fromJson(genre))
           .toList(),
+    );
+  }
+
+  MovieModel toMovieModel() {
+    return MovieModel(
+      adult: false,
+      backdropPath: backdropPath,
+      genreIds: genres.map((e) => e.id).toList(),
+      id: id,
+      title: title,
+      originalLanguage: '',
+      originalTitle: '',
+      overview: overview,
+      popularity: 0.0,
+      posterPath: posterPath,
+      releaseDate: releaseDate,
+      softcore: false,
+      video: false,
+      voteAverage: voteAverage,
+      voteCount: 0,
     );
   }
 }

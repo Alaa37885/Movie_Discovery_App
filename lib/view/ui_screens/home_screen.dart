@@ -7,7 +7,8 @@ import 'package:movie_nti_aug/cubits/popular_cubit/popular_cubit.dart';
 import 'package:movie_nti_aug/cubits/top_rated_cubit/top_rated_cubit.dart';
 import 'package:movie_nti_aug/cubits/upcoming_cubit/upcoming_cubit.dart';
 import 'package:movie_nti_aug/models/movies_model.dart';
-
+import 'package:movie_nti_aug/view/ui_screens/search_screen.dart';
+import '../../cubits/search_cubit/search_cubit.dart';
 import 'movie_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,7 +47,18 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              TextField(
+              TextFormField(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => SearchCubit(),
+                        child: SearchScreen(),
+                      ),
+                    ),
+                  );
+                },
                 decoration: InputDecoration(
                   hintText: "Search",
                   fillColor: const Color(0xff67686D),

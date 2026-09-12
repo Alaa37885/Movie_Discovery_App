@@ -32,5 +32,3 @@ class NowPlayingCubit extends Cubit<NowPlayingState> {
     }
   }
 }
-
-

@@ -1,142 +1,165 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_nti_aug/cubits/search_cubit/search_cubit.dart';
-import 'movie_details_screen.dart';
+import '../widgets/search.dart';
+import 'home_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          TextField(
-            onChanged: (value) {
-              context.read<SearchCubit>().searchMovies(value);
-            },
-            decoration: InputDecoration(
-              hintText: "Search",
-              fillColor: const Color(0xff67686D),
-              filled: true,
-              suffixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: const Color(0xff242A32),
+
+      appBar: AppBar(
+        backgroundColor: const Color(0xff242A32),
+        centerTitle: true,
+
+        title: const Text(
+          "Search",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 19,
+            fontWeight: FontWeight.w700,
           ),
+        ),
 
-          const SizedBox(height: 20),
+        actions: const [
+          Icon(Icons.info_outline_rounded, color: Colors.white),
+          SizedBox(width: 10),
+        ],
+      ),
 
-          Expanded(
-            child: BlocBuilder<SearchCubit, SearchState>(
-              builder: (context, state) {
-                // load
-                if (state is SearchLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14.0),
 
-                // success
-                if (state is SearchSuccess) {
-                  if (state.movies.isEmpty) {
-                    return const Center(child: Text("No movies found",
-                        style: TextStyle(color: Colors.white),
+        child: Column(
+          children: [
+            // Search TextField
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: "Search",
+                hintStyle: const TextStyle(color: Color(0xff67686D)),
+
+                suffixIcon: const Icon(Icons.search, color: Color(0xff67686D)),
+
+                fillColor: const Color(0xff3A3F47),
+                filled: true,
+
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+
+              onChanged: (value) {
+                context.read<SearchCubit>().searchMovies(value);
+              },
+
+              style: const TextStyle(color: Colors.white),
+
+              cursorColor: const Color(0xff67686D),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Search Results
+            Expanded(
+              child: BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  // Loading
+                  if (state is SearchLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  // Failure
+                  if (state is SearchFailure) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.message,
+                            style: const TextStyle(color: Colors.red),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          const Text(
+                            "We are sorry, we cannot find the movie",
+                            style: TextStyle(color: Colors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     );
                   }
 
-                  return GridView.builder(
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: state.movies.length,
-                    itemBuilder: (context, index) {
-                      final movie = state.movies[index];
+                  // Success
+                  if (state is SearchSuccess) {
+                    final movies = state.movies;
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  MovieDetailsScreen(movieId: movie.id),
-                            ),
-                          );
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: movie.posterPath != null
-                              ? Image.network(
-                            "https://image.tmdb.org/t/p/w500${movie
-                                .posterPath}",
-                            fit: BoxFit.cover,
-                          )
-                              : Container(
-                            color: const Color(0xff3A3F47),
-                            child: const Icon(
-                              Icons.movie,
-                              color: Colors.white,
-                            ),
-                          ),
+                    // No results
+                    if (movies.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "No movies found",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       );
-                    },
-                  );
-                }
+                    }
 
-                // failure
-                if (state is SearchFailure) {
-                  return Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          state.message,
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                        Text(
-                         "we are sorry, we can not find the movie ",
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ],
-                    ),
-                  );
-                }
+                    // Results
+                    return ListView.builder(
+                      itemCount: movies.length,
+                      itemBuilder: (context, index) {
+                        return SearchCard(
+                          movie: movies[index],
+                        );
+                      },
+                    );
+                  }
 
-                return Column(
-                  children: [
-                    SizedBox(height: 150,),
+                  // Initial State
+                  return Column(
+                    children: [
+                      const SizedBox(height: 70),
 
-                    Center(
-                    child: Image.asset(
-                    "assets/images/no-results 1.png",
-                      width: 150,
-                      height: 150,
+                      Image.asset(
+                        "assets/images/no-results 1.png",
+                        width: 150,
+                        height: 150,
                       ),
-                    ),
 
-                    const Center(
-                    child: Column(
-                      children: [
-                        Text(
+                      const SizedBox(height: 20),
+
+                      const Text(
                         "Search for a movie",
-                        style: TextStyle(color: Colors.white , fontSize: 24),),
+                        style: TextStyle(color: Colors.white, fontSize: 24),
+                        textAlign: TextAlign.center,
+                      ),
 
-                        Text(
-                          "Find your movie by Type title, categories, years, etc ",
-                          style: TextStyle(color: Colors.white , fontSize: 16),),
-                      ],
-                    ),
-                    ),
-                  ],
-                );
-              },
+                      const SizedBox(height: 10),
+
+                      const Text(
+                        "Find your movie by Type title, categories, years, etc",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

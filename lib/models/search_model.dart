@@ -1,3 +1,5 @@
+import 'movie_details_model.dart';
+
 class SearchResponseModel {
   final int page;
   final List<SearchMovieModel> results;
@@ -13,12 +15,13 @@ class SearchResponseModel {
 
   factory SearchResponseModel.fromJson(Map<String, dynamic> json) {
     return SearchResponseModel(
-      page: json['page'],
-      results: (json['results'] as List)
-          .map((movie) => SearchMovieModel.fromJson(movie))
-          .toList(),
-      totalPages: json['total_pages'],
-      totalResults: json['total_results'],
+      page: json['page'] ?? 0,
+      results: (json['results'] as List<dynamic>?)
+              ?.map((movie) => SearchMovieModel.fromJson(movie))
+              .toList() ??
+          [],
+      totalPages: json['total_pages'] ?? 0,
+      totalResults: json['total_results'] ?? 0,
     );
   }
 }
@@ -39,6 +42,9 @@ class SearchMovieModel {
   final double voteAverage;
   final int voteCount;
 
+  int? runtime;
+  List<GenreModel> genres;
+
   SearchMovieModel({
     required this.adult,
     this.backdropPath,
@@ -54,14 +60,19 @@ class SearchMovieModel {
     required this.video,
     required this.voteAverage,
     required this.voteCount,
+    this.runtime,
+    this.genres = const [],
   });
 
   factory SearchMovieModel.fromJson(Map<String, dynamic> json) {
     return SearchMovieModel(
       adult: json['adult'] ?? false,
       backdropPath: json['backdrop_path'],
-      genreIds: List<int>.from(json['genre_ids'] ?? []),
-      id: json['id'],
+      genreIds: (json['genre_ids'] as List<dynamic>?)
+              ?.map((e) => e as int)
+              .toList() ??
+          [],
+      id: json['id'] ?? 0,
       title: json['title'] ?? '',
       originalLanguage: json['original_language'] ?? '',
       originalTitle: json['original_title'] ?? '',

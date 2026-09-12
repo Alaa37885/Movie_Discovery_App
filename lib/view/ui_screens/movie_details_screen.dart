@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_nti_aug/cubits/movie_details_cubit/movie_details_cubit.dart';
 import 'package:movie_nti_aug/models/cast_model.dart';
 import 'package:movie_nti_aug/models/review_model.dart';
+import 'package:movie_nti_aug/cubits/watchlist_cubit/watchlist_cubit.dart';
+import 'package:movie_nti_aug/cubits/watchlist_cubit/watchlist_state.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final int movieId;
@@ -94,13 +96,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 ),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.bookmark_border,
-                                color: Colors.white,
-                                size: 24,
-                              ),
+                            BlocBuilder<WatchlistCubit, WatchlistState>(
+                              builder: (context, state) {
+                                final isSaved = context.read<WatchlistCubit>().isInWatchlist(movie.id);
+                                return IconButton(
+                                  onPressed: () {
+                                    context.read<WatchlistCubit>().toggleWatchlist(movie.toMovieModel());
+                                  },
+                                  icon: Icon(
+                                    isSaved ? Icons.bookmark : Icons.bookmark_border,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
