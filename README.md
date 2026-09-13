@@ -87,8 +87,7 @@ Each feature is a self-contained module representing a specific functional area 
    flutter run
    ```
 
-## Author
-A'laa Omar Hamed
+## Developed with 
+    A'laa Omar Hamed
 
----
-*Developed with ❤️ by [Your Name]*
+
