@@ -1,6 +1,6 @@
-# Movie NTI - Movie Discovery App 🎬
+# Movie Discovery App 🎬
 
-A professional Flutter application built to explore the latest movies, search for favorites, and manage a personal watchlist. This project was developed as part of the **NTI (National Telecommunication Institute)** training program.
+A professional Flutter application built to explore the latest movies, search for favorites, and manage a personal watchlist. 
 
 ## 🚀 Overview
 
