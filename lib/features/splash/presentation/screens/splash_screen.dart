@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_nti_aug/features/home/data/repositories/home_repository_impl.dart';
 import 'package:movie_nti_aug/features/home/presentation/cubits/home_cubit/home_cubit.dart';
 import 'package:movie_nti_aug/features/nav/presentation/screens/nav_screen.dart';
-
-import '../../../../core/network/dio_client.dart';
-import '../../../home/data/data_sources/home_remote_data_source.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,15 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(
             builder: (context) {
               return BlocProvider(
-                create: (context) {
-                  return HomeCubit(
-                    HomeRepositoryImpl(
-                      HomeRemoteDataSourceImpl(
-                        DioClient(),
-                      ),
-                    ),
-                  );
-                },
+                create: (context) => HomeCubit(),
                 child: const NavScreen(),
               );
             },

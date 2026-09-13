@@ -1,3 +1,5 @@
+import 'package:movie_nti_aug/features/movie_details/data/models/movie_details_model.dart';
+
 class CarouselMoviesResponse {
   final int page;
   final List<MovieModel> results;
@@ -33,7 +35,6 @@ class CarouselMoviesResponse {
   }
 }
 
-
 class MovieModel {
   final bool adult;
   final String? backdropPath;
@@ -51,6 +52,9 @@ class MovieModel {
   final double voteAverage;
   final int voteCount;
 
+  int? runtime;
+  List<GenreModel> genres;
+
   MovieModel({
     required this.adult,
     this.backdropPath,
@@ -67,6 +71,8 @@ class MovieModel {
     required this.video,
     required this.voteAverage,
     required this.voteCount,
+    this.runtime,
+    this.genres = const [],
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {

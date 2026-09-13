@@ -217,18 +217,18 @@ class MovieListScreen extends StatelessWidget {
 
                   // Genre
                   Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.movie_outlined,
                         color: Colors.white70,
                         size: 13,
                       ),
-
-                      SizedBox(width: 4),
-
+                      const SizedBox(width: 4),
                       Text(
-                        'Action',
-                        style: TextStyle(color: Colors.white70, fontSize: 11),
+                        movie.genres.isNotEmpty
+                            ? movie.genres.map((g) => g.name).join(', ')
+                            : 'N/A',
+                        style: const TextStyle(color: Colors.white70, fontSize: 11),
                       ),
                     ],
                   ),
@@ -243,12 +243,12 @@ class MovieListScreen extends StatelessWidget {
                         color: Colors.white70,
                         size: 12,
                       ),
-
                       const SizedBox(width: 4),
-
                       Text(
-                        movie.releaseDate ?? 'Unknown',
-
+                        movie.releaseDate.isNotEmpty &&
+                                movie.releaseDate.length >= 4
+                            ? movie.releaseDate.substring(0, 4)
+                            : movie.releaseDate,
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 11,
@@ -261,14 +261,15 @@ class MovieListScreen extends StatelessWidget {
 
                   // Runtime
                   Row(
-                    children: const [
-                      Icon(Icons.access_time, color: Colors.white70, size: 12),
-
-                      SizedBox(width: 4),
-
+                    children: [
+                      const Icon(Icons.access_time,
+                          color: Colors.white70, size: 12),
+                      const SizedBox(width: 4),
                       Text(
-                        '139 minutes',
-                        style: TextStyle(color: Colors.white70, fontSize: 11),
+                        movie.runtime != null
+                            ? '${movie.runtime} minutes'
+                            : 'N/A',
+                        style: const TextStyle(color: Colors.white70, fontSize: 11),
                       ),
                     ],
                   ),

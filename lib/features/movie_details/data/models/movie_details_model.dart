@@ -56,6 +56,8 @@ class MovieDetailsModel {
       video: false,
       voteAverage: voteAverage,
       voteCount: 0,
+      runtime: runtime,
+      genres: genres,
     );
   }
 }
